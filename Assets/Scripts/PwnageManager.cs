@@ -13,13 +13,16 @@ public class PwnageManager : Singleton
     public TextMeshPro ragetext;
 
     private float timer;
-
+    public bool paused;
     private void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= 0.5f)
+        if (!paused)
         {
-            UpdateStats();
+            timer += Time.deltaTime;
+            if (timer >= 0.5f)
+            {
+                UpdateStats();
+            }
         }
     }
 

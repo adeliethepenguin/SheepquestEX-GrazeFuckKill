@@ -51,6 +51,8 @@ public class YouBigSheep : MonoBehaviour
         Cursor.visible = false;
         movementLock = true;
         dialogue.StartDialogue(dialogues[0]);
+        FindFirstObjectByType<CameraScript>().paused = true;
+        FindFirstObjectByType<PwnageManager>().paused = true;
     }
     private void Update()
     {
@@ -93,6 +95,8 @@ public class YouBigSheep : MonoBehaviour
                 {
                     movementLock = false;
                     dialogueboximage.SetActive(false);
+                    FindFirstObjectByType<CameraScript>().paused = false;
+                    FindFirstObjectByType<PwnageManager>().paused = false;
                 }
             }
             

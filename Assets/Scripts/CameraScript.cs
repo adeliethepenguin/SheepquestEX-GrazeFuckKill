@@ -17,7 +17,11 @@ public class CameraScript : MonoBehaviour
     float chargeTime = 0f;
     public RaycastHit hitbo;
 
+    public bool paused;
+
     public float bulletSpeed = 10f;
+
+    public TMP_Text bulletspeedtext;
     public GameObject bullet;
 
     private void Start()
@@ -32,37 +36,40 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        reticlePosition = this.transform.position;
-
-        spin.x += Input.GetAxis("Mouse X");
-
-
-        spin.y += Input.GetAxis("Mouse Y");
-        spin.y = Mathf.Clamp(spin.y, -90, 90);
-
-        transform.localRotation = Quaternion.Euler(-spin.y * speed, spin.x * speed, 0f);
-        
-        if (Input.GetMouseButton(0))
+        if (!paused)
         {
-            chargeTime += Time.deltaTime;
-            float t = Mathf.Clamp01(chargeTime / maxPowChargeTime); // takes 2s to fully charge
-            powerUp = Mathf.Lerp(0f, maxPower, t * t); // quadratic growth
-            Debug.Log("CHARGING AT " + powerUp + "%. GET READY TO FIRE!");
-        }
+            reticlePosition = this.transform.position;
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (powerUp > 1f)
+            spin.x += Input.GetAxis("Mouse X");
+
+
+            spin.y += Input.GetAxis("Mouse Y");
+            spin.y = Mathf.Clamp(spin.y, -90, 90);
+
+            transform.localRotation = Quaternion.Euler(-spin.y * speed, spin.x * speed, 0f);
+
+            if (Input.GetMouseButton(0))
             {
-                Fire(bulletSpeed * powerUp);
+                chargeTime += Time.deltaTime;
+                float t = Mathf.Clamp01(chargeTime / maxPowChargeTime); // takes 2s to fully charge
+                powerUp = Mathf.Lerp(0f, maxPower, t * t); // quadratic growth
+                bulletspeedtext.text = "Current Bullet Charge: " + powerUp * 10f + "%!";
+                Debug.Log("CHARGING AT " + powerUp + "%. GET READY TO FIRE!");
             }
-            else
+
+            if (Input.GetMouseButtonUp(0))
             {
-                Fire(bulletSpeed);
+                if (powerUp > 1f)
+                {
+                    Fire(bulletSpeed * powerUp);
+                }
+                else
+                {
+                    Fire(bulletSpeed);
+                }
+                powerUp = 0f;
+                chargeTime = 0f;
             }
-            powerUp = 0f;
-            chargeTime = 0f;
         }
     }
 
