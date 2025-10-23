@@ -22,7 +22,9 @@ public class Receiver : MonoBehaviour
 
     public Color FloorCheck()
     {
+        
         return floors.Peek();
+
     }
     public Color SkyCheck()
     {
@@ -31,7 +33,14 @@ public class Receiver : MonoBehaviour
 
     public GameObject EnemyCheck()
     {
-        return enemies.Peek();
+        if (enemies.Count != 0)
+        {
+            return enemies.Peek();
+        }
+        else
+        {
+            return null;
+        }
     }
 
 }

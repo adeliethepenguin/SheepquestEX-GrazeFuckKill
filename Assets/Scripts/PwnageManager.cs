@@ -35,7 +35,7 @@ public class PwnageManager : Singleton
         }
         if (rageMeter < rageMax)
         {
-            rageMeter += (hornyMeter / 10f);
+            rageMeter += (hornyMeter / 100f);
             if (rageMeter > rageMax)
             {
                 rageMeter = rageMax;

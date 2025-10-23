@@ -16,7 +16,7 @@ public class Command : MonoBehaviour
     private void Awake()
     {
         this.defaultFloor = floor.material.color;
-        this.defaultSky = RenderSettings.skybox.color;
+        this.defaultSky = RenderSettings.skybox.GetColor("_SkyTint");
         currentEnemies = defaultEnemies;
         
     }
@@ -29,25 +29,34 @@ public class Command : MonoBehaviour
 
     public void NewDimension(Color floor, Color sky, GameObject newEnemies)
     {
-        this.floor.material.color = floor;
-        RenderSettings.skybox.color=sky;
-        receiver.NewColor(floor, sky, newEnemies);
-        currentEnemies.SetActive(false);
-        currentEnemies = newEnemies;
-        currentEnemies.SetActive(true);
-
+        if (floor != this.floor.material.color)
+        {
+            this.floor.material.color = floor;
+            if (RenderSettings.skybox.HasProperty("_SkyTint"))
+            {
+                RenderSettings.skybox.SetColor("_SkyTint", sky);
+                DynamicGI.UpdateEnvironment();
+            }
+            receiver.NewColor(floor, sky, newEnemies);
+            currentEnemies.SetActive(false);
+            currentEnemies = newEnemies;
+            currentEnemies.SetActive(true);
+        }
     }
 
     public void UndoDimension()
     {
-        if (receiver.FloorCheck() != null)
+        if (receiver.EnemyCheck() != null)
         {
             
             receiver.UnColor();
-            if (receiver.FloorCheck() != null)
+            if (receiver.EnemyCheck() != null)
             {
                 this.floor.material.color = receiver.FloorCheck();
-                RenderSettings.skybox.color = receiver.SkyCheck();
+                if (RenderSettings.skybox.HasProperty("_SkyTint"))
+                {
+                    RenderSettings.skybox.SetColor("_SkyTint", receiver.SkyCheck());
+                };
                 currentEnemies.SetActive(false);
                 currentEnemies = receiver.EnemyCheck();
                 currentEnemies.SetActive(true);
@@ -55,7 +64,10 @@ public class Command : MonoBehaviour
             else
             {
                 floor.material.color = defaultFloor;
-                RenderSettings.skybox.color = defaultSky;
+                if (RenderSettings.skybox.HasProperty("_SkyTint"))
+                {
+                    RenderSettings.skybox.SetColor("_SkyTint", defaultSky);
+                }
                 currentEnemies.SetActive(false);
                 currentEnemies = defaultEnemies;
                 currentEnemies.SetActive(true);
@@ -65,7 +77,10 @@ public class Command : MonoBehaviour
         else
         {
             floor.material.color = defaultFloor;
-            RenderSettings.skybox.color = defaultSky;
+            if (RenderSettings.skybox.HasProperty("_SkyTint"))
+            {
+                RenderSettings.skybox.SetColor("_SkyTint", defaultSky);
+            }
             currentEnemies.SetActive(false);
             currentEnemies = defaultEnemies;
             currentEnemies.SetActive(true);
