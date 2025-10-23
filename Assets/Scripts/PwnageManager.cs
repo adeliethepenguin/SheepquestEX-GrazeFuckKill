@@ -1,11 +1,11 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PwnageManager : Singleton
 {
     public static float hornyMeter;
     public static float rageMeter = 0f;
-    public static float rageRate = 0.1f;
 
     public float rageMax = 2000f;
 
@@ -52,12 +52,7 @@ public class PwnageManager : Singleton
 
     void ShallWeRage()
     {
-        int i = UnityEngine.Random.Range(1, 100);
-        if (i <= rageRate * 100)
-        {
-            rageMeter += 1f;
-            //RageUpdate?.Invoke();
-        }
+       rageMeter += 1f;
     }
     void ShallWeGetHorny()
     {
