@@ -1,16 +1,30 @@
 using UnityEngine;
 
-public class Noob : MonoBehaviour
+public class Noob : MonoBehaviour, IEnemy
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public string EnemyName { get; set; }
+    public float Health { get; set; }
+    public float Damage { get; set; }
+    public float Speed { get; set; }
+
+
+
+    public void Initialize()
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Die()
     {
-        
+
+    }
+
+    public void Update()
+    {
+
+    }
+
+    public void Attack()
+    {
+
     }
 }
