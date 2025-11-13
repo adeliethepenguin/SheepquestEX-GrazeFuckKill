@@ -15,7 +15,7 @@ public class PwnageManager : Singleton
     private float timer;
     public bool paused;
     private void Update()
-    {
+    {      
         if (!paused)
         {
             timer += Time.deltaTime;
