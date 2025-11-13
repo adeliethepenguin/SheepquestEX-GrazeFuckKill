@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public class ProFactory : MonoBehaviour
+public class ProFactory : EnemyFactory
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public Pro proPrefab;
 
-    // Update is called once per frame
-    void Update()
+    public override IEnemy CreateEnemy()
     {
-        
+        Pro pro = Instantiate<Pro>(proPrefab);
+        return pro;
     }
 }

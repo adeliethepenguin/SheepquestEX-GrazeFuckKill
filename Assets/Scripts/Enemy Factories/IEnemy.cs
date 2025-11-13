@@ -10,11 +10,13 @@ public interface IEnemy
 
     public float Range { get; set; }
 
-    public Transform trans { get; set; }
+    public string Name { get; set; }
 
+    public Transform Trans { get; set; }
 
+    public GameObject Player { get; set;  }
 
-    public void Initialize(EventStuff events);
+    public void Initialize(EventStuff events, GameObject player);
     public void Die();
     public void Update();
     public void Attack();

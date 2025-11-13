@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public class HackerFactory : MonoBehaviour
+public class HackerFactory : EnemyFactory
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public Hacker hackerPrefab;
 
-    // Update is called once per frame
-    void Update()
+    public override IEnemy CreateEnemy()
     {
-        
+        Hacker hacker = Instantiate<Hacker>(hackerPrefab);
+        return hacker;
     }
 }

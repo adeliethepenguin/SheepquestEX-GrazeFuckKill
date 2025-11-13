@@ -5,7 +5,14 @@ public class EnemySpawner : MonoBehaviour
 {
     public EventStuff events;
 
-    public EnemyFactory factory;
+    public NoobFactory noobFactory;
+    public ProFactory proFactory;
+
+    public int noobRate;
+    public int proRate;
+    public int hackRate;
+
+    public GameObject player;
 
     public List<IEnemy> enemies;
 
@@ -25,16 +32,39 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemy()
     {
+        
+
         if (maxEnemies > enemies.Count)
         {
-            IEnemy newEnemy = factory.CreateEnemy();
-            newEnemy.Initialize(events);
-            newEnemy.trans = spawnpoints[Random.Range(0, spawnpoints.Length - 1)];
-            enemies.Add(newEnemy);
+            int maxRate = noobRate + proRate + hackRate;
+            int seed = Random.Range(1, maxRate);
+
+            if (seed <= noobRate)
+            {
+                Debug.Log("Noob Spawned");
+                IEnemy newEnemy = noobFactory.CreateEnemy();
+                newEnemy.Initialize(events, player);
+                newEnemy.Trans = spawnpoints[Random.Range(0, spawnpoints.Length - 1)];
+                enemies.Add(newEnemy);
+            }
+            else if (seed <= noobRate + proRate)
+            {
+                Debug.Log("Pro Spawned");
+                IEnemy newEnemy = proFactory.CreateEnemy();
+                newEnemy.Initialize(events, player);
+                newEnemy.Trans = spawnpoints[Random.Range(0, spawnpoints.Length - 1)];
+                enemies.Add(newEnemy);
+            }
+            else if (seed <= maxRate)
+            {
+
+            }
+
+            
         }
         else
         {
-            Debug.Log("MaxEnemies");
+            Debug.Log("Max Enemies! Enemy Not Spawned.");
         }
     }
 

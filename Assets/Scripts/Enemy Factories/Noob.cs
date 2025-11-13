@@ -10,13 +10,17 @@ public class Noob : MonoBehaviour, IEnemy
 
     public float Range { get; set; }
 
-    public Transform trans { get; set; }
+    public string Name { get; set; }
 
+    public Transform Trans { get; set; }
 
+    public GameObject Player { get; set; }
 
-    public void Initialize(EventStuff events)
+    public void Initialize(EventStuff events, GameObject player)
     {
         EventManager = events;
+        Name = "Noob";
+        Trans = this.transform;
     }
 
 
@@ -27,7 +31,17 @@ public class Noob : MonoBehaviour, IEnemy
 
     public void Update()
     {
+        if (Player != null)
+        {
+            Vector3 directionToPlayer = Player.transform.position - Trans.position;
+            directionToPlayer.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(directionToPlayer);
+            Trans.rotation = Quaternion.Slerp(Trans.rotation, rotation, Time.deltaTime * Speed);
 
+            
+            float step = Speed * Time.deltaTime;
+            Trans.position = Vector3.MoveTowards(Trans.position, Player.transform.position, step);
+        }
     }
 
     public void Attack()
