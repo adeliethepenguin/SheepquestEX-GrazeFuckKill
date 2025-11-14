@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5560809508214871214}
   - component: {fileID: 1507166546609303278}
   - component: {fileID: 3562569295483817218}
-  - component: {fileID: 6995061847016045026}
   m_Layer: 0
   m_Name: Pro
   m_TagString: Enemy
@@ -111,20 +110,6 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6995061847016045026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 191248745690130052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecf32ea8c5b789b4286c8eab29bc8fba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  setSpeed: 0
-  paused: 0
 --- !u!1 &3427499745537397067
 GameObject:
   m_ObjectHideFlags: 0
