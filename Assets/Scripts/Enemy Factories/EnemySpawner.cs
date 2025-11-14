@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public EventStuff events;
+    public float spawnDelay;
+
+    public RealEvent events;
 
     public NoobFactory noobFactory;
     public ProFactory proFactory;
+    public HackerFactory hackerFactory;
 
     public int noobRate;
     public int proRate;
@@ -14,62 +17,111 @@ public class EnemySpawner : MonoBehaviour
 
     public GameObject player;
 
-    public List<IEnemy> enemies;
+    [SerializeField]
+    public List<IEnemy> enemies = new List<IEnemy>();
 
     public int maxEnemies = 5;
 
     public Transform[] spawnpoints;
 
+    [SerializeField]
+    bool paused = false;
+    [SerializeField]
+    int counter;
+
     private void Awake()
     {
         events.OnEnemyKilled += RemoveEnemy;
+        events.OnGamePaused += PauseSpawning;
+        events.OnGameUnpaused += ResumeSpawning;
     }
 
     private void OnDestroy()
     {
         events.OnEnemyKilled -= RemoveEnemy;
+        events.OnGamePaused -= PauseSpawning;
+        events.OnGameUnpaused -= ResumeSpawning;
+    }
+
+
+    private void FixedUpdate()
+    {
+        if (!paused)
+        {
+            counter++;
+            if (counter > spawnDelay)
+            {
+                SpawnEnemy();
+                counter = 0;
+            }
+        }
+    }
+
+    private void PauseSpawning()
+    {
+        paused = true;
+    }
+    
+
+    private void ResumeSpawning()
+    {
+        paused = false;
     }
 
     public void SpawnEnemy()
     {
-        
-
-        if (maxEnemies > enemies.Count)
+        int currentEnemies = 0;
+        if (enemies == null)
         {
-            int maxRate = noobRate + proRate + hackRate;
-            int seed = Random.Range(1, maxRate);
-
-            if (seed <= noobRate)
-            {
-                Debug.Log("Noob Spawned");
-                IEnemy newEnemy = noobFactory.CreateEnemy();
-                newEnemy.Initialize(events, player);
-                newEnemy.Trans = spawnpoints[Random.Range(0, spawnpoints.Length - 1)];
-                enemies.Add(newEnemy);
-            }
-            else if (seed <= noobRate + proRate)
-            {
-                Debug.Log("Pro Spawned");
-                IEnemy newEnemy = proFactory.CreateEnemy();
-                newEnemy.Initialize(events, player);
-                newEnemy.Trans = spawnpoints[Random.Range(0, spawnpoints.Length - 1)];
-                enemies.Add(newEnemy);
-            }
-            else if (seed <= maxRate)
-            {
-
-            }
-
-            
+            currentEnemies = 0;
         }
         else
         {
-            Debug.Log("Max Enemies! Enemy Not Spawned.");
+            currentEnemies = enemies.Count;
+        }
+        
+        if (maxEnemies > currentEnemies)
+        {
+            int maxRate = noobRate + proRate + hackRate;
+            int seed = Random.Range(0, maxRate);
+            IEnemy newEnemy = null;
+            if (seed < noobRate)
+            {
+                Debug.Log("Noob Spawned");
+                newEnemy = noobFactory.CreateEnemy();
+            }
+            else if (seed < noobRate + proRate)
+            {
+                Debug.Log("Pro Spawned");
+                newEnemy = proFactory.CreateEnemy();
+            }
+            else if (seed < maxRate)
+            {
+                Debug.Log("Hacker Spawned");
+                newEnemy = hackerFactory.CreateEnemy();
+            }
+            if (newEnemy != null)
+            {
+                newEnemy.Initialize(events, player);
+                newEnemy.Trans.position = spawnpoints[Random.Range(0, spawnpoints.Length)].position+newEnemy.Trans.position;
+                enemies.Add(newEnemy);
+            }
+            else
+            {
+                Debug.Log("FAIL!!!");
+            }
+
+
+        }
+        else
+        {
+            Debug.Log("The Spawner by the name of: '" + transform.name+"' has Max Enemies! Enemy Not Spawned.");
         }
     }
 
     public void RemoveEnemy(IEnemy enemy)
     {
+        Debug.Log("Enemy ROmeved");
         enemies.Remove(enemy);
     }
 }

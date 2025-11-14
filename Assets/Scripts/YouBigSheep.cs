@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using TMPro;
 public class YouBigSheep : MonoBehaviour
 {
+    public RealEvent eventMan;
+
     [TextArea]
     public string[] dialogues;
 
@@ -43,16 +45,34 @@ public class YouBigSheep : MonoBehaviour
     private void Awake()
     {
         dialogue = new DialogueDeliverer(charIds, sprites, names, dialoguebox);
+        eventMan.OnGamePaused += PauseControl;
+        eventMan.OnGameUnpaused += UnpauseControl;
+    }
+
+    private void OnDestroy()
+    {
+        eventMan.OnGamePaused -= PauseControl;
+        eventMan.OnGameUnpaused -= UnpauseControl;
     }
 
     private void Start()
     {
-        Cursor.lockState=CursorLockMode.Locked;
+        eventMan.GamePaused();
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        movementLock = true;
         dialogue.StartDialogue(dialogues[0]);
         FindFirstObjectByType<CameraScript>().paused = true;
         FindFirstObjectByType<PwnageManager>().paused = true;
+    }
+
+    private void PauseControl()
+    {
+        movementLock = true;
+    }
+
+    private void UnpauseControl()
+    {
+        movementLock = false;
     }
     private void Update()
     {
@@ -93,7 +113,7 @@ public class YouBigSheep : MonoBehaviour
                 dialogue.AdvanceDialogue();
                 if (counter > 2)
                 {
-                    movementLock = false;
+                    eventMan.GameUnpaused();
                     dialogueboximage.SetActive(false);
                     FindFirstObjectByType<CameraScript>().paused = false;
                     FindFirstObjectByType<PwnageManager>().paused = false;

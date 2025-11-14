@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class Noob : MonoBehaviour, IEnemy
 {
-    public EventStuff EventManager { get; set; }
+    public RealEvent EventManager { get; set; }
     public string EnemyName { get; set; }
     public float Health { get; set; }
     public float Damage { get; set; }
+
+    [SerializeField]
+    public float setSpeed;
     public float Speed { get; set; }
 
     public float Range { get; set; }
@@ -16,9 +19,29 @@ public class Noob : MonoBehaviour, IEnemy
 
     public GameObject Player { get; set; }
 
-    public void Initialize(EventStuff events, GameObject player)
+
+
+    [SerializeField]
+    bool paused = false;
+    private void Awake()
     {
+        
+    }
+
+    private void OnDestroy()
+    {
+        Die();
+        EventManager.OnGamePaused -= Freeze;
+        EventManager.OnGameUnpaused -= Unfreeze;
+    }
+
+    public void Initialize(RealEvent events, GameObject player)
+    {
+        Speed = setSpeed;
+        Player = player;
         EventManager = events;
+        EventManager.OnGamePaused += Freeze;
+        EventManager.OnGameUnpaused += Unfreeze;
         Name = "Noob";
         Trans = this.transform;
     }
@@ -29,18 +52,31 @@ public class Noob : MonoBehaviour, IEnemy
         EventManager.EnemyKilled(this);
     }
 
+    private void Freeze()
+    {
+        paused = true;
+    }
+
+    private void Unfreeze()
+    {
+        paused = false;
+    }
+
     public void Update()
     {
-        if (Player != null)
+        if (!paused)
         {
-            Vector3 directionToPlayer = Player.transform.position - Trans.position;
-            directionToPlayer.y = 0;
-            Quaternion rotation = Quaternion.LookRotation(directionToPlayer);
-            Trans.rotation = Quaternion.Slerp(Trans.rotation, rotation, Time.deltaTime * Speed);
+            if (Player != null)
+            {
+                Vector3 directionToPlayer = Player.transform.position - Trans.position;
+                directionToPlayer.y = 0;
+                Quaternion rotation = Quaternion.LookRotation(directionToPlayer);
+                Trans.rotation = Quaternion.Slerp(Trans.rotation, rotation, Time.deltaTime * Speed);
 
-            
-            float step = Speed * Time.deltaTime;
-            Trans.position = Vector3.MoveTowards(Trans.position, Player.transform.position, step);
+
+                float step = Speed * Time.deltaTime;
+                Trans.position = Vector3.MoveTowards(Trans.position, Player.transform.position, step);
+            }
         }
     }
 
