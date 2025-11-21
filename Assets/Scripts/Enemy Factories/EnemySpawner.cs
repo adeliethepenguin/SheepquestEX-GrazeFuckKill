@@ -53,7 +53,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void MakeDirty(int index)
     {
-        Debug.Log("sceneswitch spawner");
+        Debug.Log("Spawner is Making Stuff Dirty");
 
         if (index == dimension)
         {
@@ -121,17 +121,17 @@ public class EnemySpawner : MonoBehaviour
                 IEnemy newEnemy = null;
                 if (seed < noobRate)
                 {
-                    Debug.Log("Noob Spawned");
+                    //Debug.Log("Noob Spawned");
                     newEnemy = noobFactory.CreateEnemy();
                 }
                 else if (seed < noobRate + proRate)
                 {
-                    Debug.Log("Pro Spawned");
+                    //Debug.Log("Pro Spawned");
                     newEnemy = proFactory.CreateEnemy();
                 }
                 else if (seed < maxRate)
                 {
-                    Debug.Log("Hacker Spawned");
+                    //Debug.Log("Hacker Spawned");
                     newEnemy = hackerFactory.CreateEnemy();
                 }
                 if (newEnemy != null)
@@ -149,14 +149,14 @@ public class EnemySpawner : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("FAIL!!!");
+                    Debug.Log("FAIL!!! SPAWN FAIL!!!");
                 }
 
 
             }
             else
             {
-                Debug.Log("The Spawner by the name of: '" + transform.name + "' has Max Enemies! Enemy Not Spawned.");
+                //Debug.Log("The Spawner by the name of: '" + transform.name + "' has Max Enemies! Enemy Not Spawned.");
             }
         
     }
