@@ -24,7 +24,6 @@ public class YouBigSheep : MonoBehaviour
     public Command command;
     public Color[] floorcolors;
     public Color[] skycolors;
-    public GameObject[] enemies;
 
     float xRot;
     float yRot;
@@ -80,15 +79,15 @@ public class YouBigSheep : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                command.NewDimension(floorcolors[0], skycolors[0], enemies[0]);
+                command.NewDimension(0);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                command.NewDimension(floorcolors[1], skycolors[1], enemies[1]);
+                command.NewDimension(1);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                command.NewDimension(floorcolors[2], skycolors[2], enemies[2]);
+                command.NewDimension(2);
             }
             else if (Input.GetKeyDown(KeyCode.Q))
             {

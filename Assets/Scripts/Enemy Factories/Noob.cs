@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Noob : MonoBehaviour, IEnemy
 {
+    public bool Dirty { get; set; }
     public RealEvent EventManager { get; set; }
     public string EnemyName { get; set; }
     public float Health { get; set; }

@@ -3,11 +3,15 @@ using UnityEngine.Rendering;
 
 public class Command : MonoBehaviour
 {
+    public RealEvent events;
+
     public Color defaultFloor;
     public Color defaultSky;
-    public GameObject defaultEnemies;
 
-    public GameObject currentEnemies;
+
+    public Color[] floorcolors;
+    public Color[] skycolors;
+
 
     public Receiver receiver;
     public Camera cam;
@@ -17,49 +21,44 @@ public class Command : MonoBehaviour
     {
         this.defaultFloor = floor.material.color;
         this.defaultSky = RenderSettings.skybox.GetColor("_SkyTint");
-        currentEnemies = defaultEnemies;
         
     }
-    public Command(Color defaultFloor, Color defaultSky, GameObject defaultEnemies)
+    public Command(int newDimension)
     {
-        this.defaultFloor = defaultFloor;
-        this.defaultSky = defaultSky;
-        this.defaultEnemies = defaultEnemies;
+        this.defaultFloor = floorcolors[newDimension];
+        this.defaultSky = skycolors[newDimension];
+        events.SceneSwitched(newDimension);
     }
 
-    public void NewDimension(Color floor, Color sky, GameObject newEnemies)
+    public void NewDimension(int newDim)
     {
-        if (floor != this.floor.material.color)
+        if (floorcolors[newDim] != this.floor.material.color)
         {
-            this.floor.material.color = floor;
+            this.floor.material.color = floorcolors[newDim];
             if (RenderSettings.skybox.HasProperty("_SkyTint"))
             {
-                RenderSettings.skybox.SetColor("_SkyTint", sky);
+                RenderSettings.skybox.SetColor("_SkyTint", skycolors[newDim]);
                 DynamicGI.UpdateEnvironment();
             }
-            receiver.NewColor(floor, sky, newEnemies);
-            currentEnemies.SetActive(false);
-            currentEnemies = newEnemies;
-            currentEnemies.SetActive(true);
+            receiver.NewDim(newDim);
         }
+        events.SceneSwitched(newDim);
     }
 
     public void UndoDimension()
     {
-        if (receiver.EnemyCheck() != null)
+        if (!receiver.EmptyCheck())
         {
-            
-            receiver.UnColor();
-            if (receiver.EnemyCheck() != null)
+            receiver.GoBack();
+            if (!receiver.EmptyCheck())
             {
-                this.floor.material.color = receiver.FloorCheck();
+                int oldDim = receiver.DimensionCheck();
+                this.floor.material.color = floorcolors[oldDim];
                 if (RenderSettings.skybox.HasProperty("_SkyTint"))
                 {
-                    RenderSettings.skybox.SetColor("_SkyTint", receiver.SkyCheck());
+                    RenderSettings.skybox.SetColor("_SkyTint", skycolors[oldDim]);
                 };
-                currentEnemies.SetActive(false);
-                currentEnemies = receiver.EnemyCheck();
-                currentEnemies.SetActive(true);
+                events.SceneSwitched(oldDim);
             }
             else
             {
@@ -68,9 +67,7 @@ public class Command : MonoBehaviour
                 {
                     RenderSettings.skybox.SetColor("_SkyTint", defaultSky);
                 }
-                currentEnemies.SetActive(false);
-                currentEnemies = defaultEnemies;
-                currentEnemies.SetActive(true);
+                events.SceneSwitched(-1);
 
             }
         }
@@ -81,9 +78,7 @@ public class Command : MonoBehaviour
             {
                 RenderSettings.skybox.SetColor("_SkyTint", defaultSky);
             }
-            currentEnemies.SetActive(false);
-            currentEnemies = defaultEnemies;
-            currentEnemies.SetActive(true);
+            events.SceneSwitched(-1);
         }
     }
 }

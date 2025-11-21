@@ -2,7 +2,8 @@
 
     public class Pro : MonoBehaviour, IEnemy
     {
-        public RealEvent EventManager { get; set; }
+    public bool Dirty { get; set; }
+    public RealEvent EventManager { get; set; }
         public string EnemyName { get; set; }
         public float Health { get; set; }
         public float Damage { get; set; }
@@ -39,7 +40,10 @@
         public void Die()
         {
             EventManager.EnemyKilled(this);
-            Destroy(transform.GetChild(0));
+            if (transform.childCount > 0)
+            {
+                Destroy(transform.GetChild(0));
+            }
         }
 
         private void Freeze()

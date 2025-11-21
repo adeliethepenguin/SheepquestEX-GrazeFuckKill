@@ -50,7 +50,7 @@ public class PwnageManager : Singleton
 
     void FixedUpdate()
     {
-        ShallWeGetHorny();
+        //ShallWeGetHorny();
     }
 
     void ShallWeRage()

@@ -5,42 +5,36 @@ public class Receiver : MonoBehaviour
 {
     private Stack<Color> floors = new Stack<Color>();
     private Stack<Color> skies = new Stack<Color>();
-    private Stack<GameObject> enemies = new Stack<GameObject>();
 
+    private Stack<int> dimensions = new Stack<int>();
 
-    public void NewColor(Color floor, Color sky, GameObject enemy)
+    public void NewDim(int newDim)
     {
-        floors.Push(floor);
-        skies.Push(sky);
-        enemies.Push(enemy);
+        dimensions.Push(newDim);
     }
 
-    public void UnColor()
+    public void GoBack()
     {
-        floors.Pop(); skies.Pop() ; enemies.Pop() ;
+        dimensions.Pop();
     }
 
-    public Color FloorCheck()
+    public int DimensionCheck()
     {
-        
-        return floors.Peek();
-
-    }
-    public Color SkyCheck()
-    {
-        return skies.Peek();
+        return dimensions.Peek();
     }
 
-    public GameObject EnemyCheck()
+    public bool EmptyCheck()
     {
-        if (enemies.Count != 0)
+        if (dimensions.Count == 0)
         {
-            return enemies.Peek();
+            return true;
         }
         else
         {
-            return null;
+            return false;
         }
     }
+
+
 
 }

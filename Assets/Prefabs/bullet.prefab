@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   killsound: {fileID: 3521049241274862207}
+  lifetime: 3
+  health: 1
 --- !u!54 &2070278939690777671
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -163,11 +165,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e9b9cecdc3c89bd4ab66430b61623ada, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e9b9cecdc3c89bd4ab66430b61623ada, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 1.68
   Loop: 0
   Mute: 0
   Spatialize: 0

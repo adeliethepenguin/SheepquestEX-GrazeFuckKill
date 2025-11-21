@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Hacker : MonoBehaviour, IEnemy
 {
+    public bool Dirty { get; set; }
     public RealEvent EventManager { get; set; }
     public string EnemyName { get; set; }
     public float Health { get; set; }
