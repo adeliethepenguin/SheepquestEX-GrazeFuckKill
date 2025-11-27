@@ -48,6 +48,8 @@ public class YouBigSheep : MonoBehaviour
     int paused = 0;
 
     public float comboTimer = 0f;
+
+    public AudioSource bgm;
     
 
     public DialogueDeliverer dialogue;
@@ -66,6 +68,11 @@ public class YouBigSheep : MonoBehaviour
 
     private void Awake()
     {
+        if (bgm == null)
+        {
+            bgm=GetComponent<AudioSource>();
+        }
+
         dialogue = new DialogueDeliverer(charIds, sprites, names, dialoguebox);
         eventMan.OnGamePaused += PauseControl;
         eventMan.OnGameUnpaused += UnpauseControl;
@@ -92,6 +99,10 @@ public class YouBigSheep : MonoBehaviour
     private void PauseControl()
     {
         movementLock = true;
+        if (paused != 0)
+        {
+            bgm.Pause();
+        }
     }
 
     private void UnpauseControl()
@@ -100,11 +111,18 @@ public class YouBigSheep : MonoBehaviour
         if (paused == 0)
         {
             paused++;
+            bgm.enabled = true;
         }
+        bgm.Play();
         
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         if (comboLevel > 0)
         {
             comboTimer += Time.deltaTime;

@@ -46,12 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28069cd829ba724c9943fd7f80fc000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setScore: 200
+  setScore: 300
   setHealth: 2
   Helmet: {fileID: 1962559393882420925}
   HappyFace: {fileID: 2217658001313551847}
   SadFace: {fileID: 708623287744883990}
-  setSpeed: 4
+  setSpeed: 8
 --- !u!65 &7933058756837176420
 BoxCollider:
   m_ObjectHideFlags: 0

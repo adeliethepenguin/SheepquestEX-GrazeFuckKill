@@ -25,8 +25,8 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubtractiveShadowColor: {r: 0.28982732, g: 0.31193027, b: 0.3679245, a: 1}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 9dbb154810f494645bc32737eb603503, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -2439,9 +2439,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Controls:\nwasd = movement\n1 2 or 3 = change dimension\nq = undo dumension
-    change\n\nHold down Left Click to charge your bullets!\n\nDuring dialogue: \nLeft
-    Click to progress"
+  m_text: "Controls:\nWASD = movement\n1 2 or 3 = change dimension\nQ = undo dumension
+    change\nP = pause game\nEsc = exit game\n\nHold down Left Click to charge your
+    bullets and make them faster and larger!\n\nDuring dialogue: \nLeft Click to
+    progress"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2468,8 +2469,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3191,13 +3192,13 @@ MonoBehaviour:
   defaultFloor: {r: 0, g: 0, b: 0, a: 0}
   defaultSky: {r: 0, g: 0, b: 0, a: 0}
   floorcolors:
-  - {r: 0.29663417, g: 0, b: 0.46226418, a: 0}
-  - {r: 0, g: 1, b: 0.68860507, a: 0}
-  - {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0}
+  - {r: 0.18228334, g: 0, b: 0.2830189, a: 0}
+  - {r: 0, g: 0.14891154, b: 0.33962262, a: 0}
+  - {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 0}
   skycolors:
-  - {r: 1, g: 0.76923084, b: 0, a: 0}
-  - {r: 0.6886792, g: 0.11369702, b: 0.4014697, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 0.254717, g: 0.19575472, b: 0, a: 0}
+  - {r: 0.2264151, g: 0, b: 0.1909762, a: 0}
+  - {r: 0.31132078, g: 0, b: 0, a: 0}
   setDressings: []
   receiver: {fileID: 854212258}
   cam: {fileID: 0}
@@ -6370,7 +6371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 548848239}
   - component: {fileID: 548848235}
-  - component: {fileID: 548848240}
+  - component: {fileID: 548848241}
   m_Layer: 0
   m_Name: YOU ARE THIS SHEEP
   m_TagString: Untagged
@@ -6435,6 +6436,8 @@ MonoBehaviour:
   scoreText: {fileID: 1388333643}
   movementLock: 1
   dialoguebox: {fileID: 1816360489}
+  comboTimer: 0
+  bgm: {fileID: 548848241}
 --- !u!4 &548848239
 Transform:
   m_ObjectHideFlags: 0
@@ -6452,33 +6455,103 @@ Transform:
   - {fileID: 1764153201}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &548848240
-Rigidbody:
+--- !u!82 &548848241
+AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548848234}
+  m_Enabled: 1
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: efb9f7bd15be33242bb8f7785c8351de, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 0
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
     serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
     serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 1
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &551325140
 GameObject:
   m_ObjectHideFlags: 0
@@ -16443,10 +16516,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1114490373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -195, y: -292}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -999, y: -211}
+  m_SizeDelta: {x: -1720, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1388333643
 MonoBehaviour:
@@ -16477,8 +16550,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278255391
+  m_fontColor: {r: 0.12300229, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -16502,7 +16575,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -16533,7 +16606,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 59.36084, y: -80.55417, z: -183.63403, w: 74.256165}
+  m_margin: {x: -356.54932, y: -80.55417, z: -604.7427, w: -17.35437}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -18665,6 +18738,8 @@ MonoBehaviour:
   bulletspeedtext: {fileID: 731830025}
   bullet: {fileID: 3909508759167967715, guid: ca7115630fbb7f64b8a7bcf0a54c4e59, type: 3}
   baseBulletSpeed: 1
+  minSizeMult: 0.5
+  maxSizeMult: 5
 --- !u!1 &1585296039
 GameObject:
   m_ObjectHideFlags: 0
@@ -21560,7 +21635,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1835798546
 MonoBehaviour:
@@ -28622,7 +28697,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 6b5189619eb31ef41a64252f6b35c4a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -25,6 +25,9 @@ public class CameraScript : MonoBehaviour
     public Bulletscript bullet;
     public float baseBulletSpeed;
 
+    public float minSizeMult;
+    public float maxSizeMult;
+
     private void Start()
     {
         Cursor.visible = false;
@@ -63,10 +66,12 @@ public class CameraScript : MonoBehaviour
                 if (powerUp > 1f)
                 {
                     Fire(bulletSpeed * powerUp, powerUp);
+                    bulletspeedtext.text = "Last Bullet was fired at: " + powerUp * 10f + "% Power!";
                 }
                 else
                 {
                     Fire(bulletSpeed, powerUp);
+                    bulletspeedtext.text = "Last Bullet was fired at: " + powerUp * 10f + "% Power!";
                 }
                 powerUp = 0f;
                 chargeTime = 0f;
@@ -85,17 +90,17 @@ public class CameraScript : MonoBehaviour
         if (power < 1f)
         {
             newBullet.health = 1f;
-            newBullet.transform.localScale = newBullet.transform.localScale * 0.5f;
+            newBullet.transform.localScale = newBullet.transform.localScale * minSizeMult;
         }
         else if (power<maxPower/2)
         {
             newBullet.health = 3f;
-            newBullet.transform.localScale = newBullet.transform.localScale;
+            newBullet.transform.localScale = newBullet.transform.localScale * ((minSizeMult+maxSizeMult)/2);
         }
         else
         {
             newBullet.health = 6f;
-            newBullet.transform.localScale = newBullet.transform.localScale * 3f;
+            newBullet.transform.localScale = newBullet.transform.localScale * maxSizeMult;
         }
         // Apply force to propel the bullet forward
         if (rb != null)

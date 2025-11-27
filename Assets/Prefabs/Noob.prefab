@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setScore: 100
-  setSpeed: 4
+  setSpeed: 6
   setHealth: 1
   paused: 0
 --- !u!65 &6075600144693826324
