@@ -7,14 +7,13 @@ using JetBrains.Annotations;
 public class RealEvent : MonoBehaviour
 {
     public Action<float> OnPlayerAttacked;
-    public Action<IEnemy> OnEnemyKilled;
 
+
+    public Action<IEnemy> OnEnemyKilled;
     public Action<int> OnSceneSwitch;
     public Action OnSceneInit;
-
     public Action OnGamePaused;
     public Action OnGameUnpaused;
-
     public Action<IEnemy> OnEnemySpawned;
 
     public void SceneSwitched(int newScene) { OnSceneSwitch?.Invoke(newScene); }
