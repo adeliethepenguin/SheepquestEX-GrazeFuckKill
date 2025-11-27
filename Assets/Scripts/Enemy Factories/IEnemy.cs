@@ -18,6 +18,8 @@ public interface IEnemy
     public GameObject Player { get; set;  }
 
     public void Initialize(RealEvent events, GameObject player);
+
+    public void GetHit();
     public void Die();
     public void Update();
     public void Attack();

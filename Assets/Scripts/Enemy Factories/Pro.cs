@@ -5,7 +5,7 @@
     public bool Dirty { get; set; }
     public RealEvent EventManager { get; set; }
         public string EnemyName { get; set; }
-        public float Health { get; set; }
+        
         public float Damage { get; set; }
         public float Speed { get; set; }
 
@@ -15,12 +15,18 @@
         public Transform Trans { get; set; }
 
         public GameObject Player { get; set; }
-        [SerializeField]
+    public float Health { get; set; }
+    [SerializeField]
+    public float setHealth;
+    public GameObject Helmet;
+    public GameObject HappyFace;
+    public GameObject SadFace;
         bool paused;    
         public float setSpeed;
     
         public void Initialize(RealEvent events, GameObject player)
         {
+        Health = setHealth;
             Speed = setSpeed;
             Player = player;
             EventManager = events;
@@ -45,6 +51,25 @@
                 Destroy(transform.GetChild(0));
             }
         }
+
+
+        public void GetHit()
+        {
+        Health--;
+            if (Health > 0)
+            {
+                Helmet.SetActive(false);
+                HappyFace.SetActive(false);
+                SadFace.SetActive(true);
+            }
+
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+        }
+        
 
         private void Freeze()
         {

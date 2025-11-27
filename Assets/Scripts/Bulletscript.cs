@@ -31,7 +31,7 @@ public class Bulletscript : MonoBehaviour
                 Debug.Log(killsound.pitch);
                 killsound.Play();
             }
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<IEnemy>().GetHit();
             health--;
             if (health <= 0)
             {

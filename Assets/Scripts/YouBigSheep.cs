@@ -37,6 +37,8 @@ public class YouBigSheep : MonoBehaviour
     public bool movementLock = true;
     public GameObject dialoguebox;
     int counter=0;
+
+    int paused = 0;
     
 
     public DialogueDeliverer dialogue;
@@ -72,9 +74,28 @@ public class YouBigSheep : MonoBehaviour
     private void UnpauseControl()
     {
         movementLock = false;
+        if (paused == 0)
+        {
+            paused++;
+        }
+        
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (paused ==1)
+            {
+                eventMan.GamePaused();
+                paused++;
+            }
+            else if (paused==2)
+            {
+                eventMan.GameUnpaused();
+                paused--;
+            }
+        }
+
         if (!movementLock)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -101,8 +122,29 @@ public class YouBigSheep : MonoBehaviour
             x = Input.GetAxisRaw("Horizontal");
             z = Input.GetAxisRaw("Vertical");
 
+
+            
+
             transform.position = transform.position + new Vector3(firstPersonCam.transform.forward.x, 0f, firstPersonCam.transform.forward.z) * z * speed * Time.deltaTime * (1f + ragelevel * 0.1f);
+            
             transform.position = transform.position + new Vector3(firstPersonCam.transform.right.x, 0f, firstPersonCam.transform.right.z) * x * speed * Time.deltaTime * (1f + ragelevel * 0.1f);
+
+            if (transform.position.x > 58f)
+            {
+                transform.position = new Vector3(58f, transform.position.y, transform.position.z);
+            }
+            if (transform.position.x < -58f)
+            {
+                transform.position = new Vector3(-58f, transform.position.y, transform.position.z);
+            }
+            if (transform.position.z > 28.5f)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, 28.5f);
+            }
+            if (transform.position.z < -48.5f)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, -48.5f);
+            }
         }
         else
         {
