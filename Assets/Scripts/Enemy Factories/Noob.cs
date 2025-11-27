@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Noob : MonoBehaviour, IEnemy
 {
@@ -10,11 +11,13 @@ public class Noob : MonoBehaviour, IEnemy
     public float Damage { get; set; }
 
     [SerializeField]
+    public float setScore = 1f;
     public float setSpeed;
     public float setHealth;
     public float Speed { get; set; }
 
     public float Range { get; set; }
+    public float Points {  get; set; }
 
     public string Name { get; set; }
 
@@ -41,6 +44,7 @@ public class Noob : MonoBehaviour, IEnemy
 
     private void OnDestroy()
     {
+        
         Die();
         EventManager.OnGamePaused -= Freeze;
         EventManager.OnGameUnpaused -= Unfreeze;
@@ -48,6 +52,7 @@ public class Noob : MonoBehaviour, IEnemy
 
     public void Initialize(RealEvent events, GameObject player)
     {
+        Points = setScore;
         Health = setHealth;
         Speed = setSpeed;
         Player = player;

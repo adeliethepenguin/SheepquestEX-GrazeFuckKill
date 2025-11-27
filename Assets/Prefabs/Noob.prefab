@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf32ea8c5b789b4286c8eab29bc8fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setScore: 100
   setSpeed: 4
   setHealth: 1
   paused: 0

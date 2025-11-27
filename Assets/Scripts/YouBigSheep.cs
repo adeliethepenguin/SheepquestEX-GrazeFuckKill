@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using AdeliesGayDialogueSystem;
 using NUnit.Framework;
@@ -28,32 +29,54 @@ public class YouBigSheep : MonoBehaviour
     float xRot;
     float yRot;
 
+
+    public Image combo;
+    public List <Sprite> comboIcons = new List<Sprite>();
+    public int comboLevel = 0;
+
     public List<char> charIds = new List<char>();
     public List<Sprite> sprites = new List<Sprite>();
     public List<string> names = new List<string>();
 
     public TMP_Text rageText;
     public TMP_Text hornyText;
+    public TMP_Text scoreText;
     public bool movementLock = true;
     public GameObject dialoguebox;
     int counter=0;
 
     int paused = 0;
+
+    public float comboTimer = 0f;
     
 
     public DialogueDeliverer dialogue;
+
+    private void ScoreAndCombo(IEnemy hi)
+    {
+        if (comboLevel < comboIcons.Count-1)
+        {
+            comboLevel++;
+        }
+        comboTimer = 0f;
+        combo.sprite = comboIcons[comboLevel];
+        PwnageManager.score += hi.Points*(comboLevel);
+        scoreText.text = "Score: " + PwnageManager.score;
+    }
 
     private void Awake()
     {
         dialogue = new DialogueDeliverer(charIds, sprites, names, dialoguebox);
         eventMan.OnGamePaused += PauseControl;
         eventMan.OnGameUnpaused += UnpauseControl;
+        eventMan.OnEnemyKilled += ScoreAndCombo;
     }
 
     private void OnDestroy()
     {
         eventMan.OnGamePaused -= PauseControl;
         eventMan.OnGameUnpaused -= UnpauseControl;
+        eventMan.OnEnemyKilled -= ScoreAndCombo;
     }
 
     private void Start()
@@ -82,6 +105,18 @@ public class YouBigSheep : MonoBehaviour
     }
     private void Update()
     {
+        if (comboLevel > 0)
+        {
+            comboTimer += Time.deltaTime;
+            if (comboTimer > ((6 - comboLevel)+1))
+            {
+                comboLevel=0;
+                comboTimer = 0f;
+                combo.sprite = comboIcons[comboLevel];
+            }
+        }
+
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             if (paused ==1)

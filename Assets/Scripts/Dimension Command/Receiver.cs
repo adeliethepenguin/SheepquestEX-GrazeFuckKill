@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Receiver : MonoBehaviour
 {
-    private Stack<Color> floors = new Stack<Color>();
-    private Stack<Color> skies = new Stack<Color>();
 
     private Stack<int> dimensions = new Stack<int>();
 

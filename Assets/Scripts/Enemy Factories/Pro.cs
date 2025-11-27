@@ -1,6 +1,7 @@
     using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
-    public class Pro : MonoBehaviour, IEnemy
+public class Pro : MonoBehaviour, IEnemy
     {
     public bool Dirty { get; set; }
     public RealEvent EventManager { get; set; }
@@ -10,6 +11,7 @@
         public float Speed { get; set; }
 
         public float Range { get; set; }
+    public float Points {  get; set; }
 
         public string Name { get; set; }
         public Transform Trans { get; set; }
@@ -17,6 +19,7 @@
         public GameObject Player { get; set; }
     public float Health { get; set; }
     [SerializeField]
+    public float setScore = 1f;
     public float setHealth;
     public GameObject Helmet;
     public GameObject HappyFace;
@@ -26,6 +29,7 @@
     
         public void Initialize(RealEvent events, GameObject player)
         {
+        Points = setScore;
         Health = setHealth;
             Speed = setSpeed;
             Player = player;
@@ -55,7 +59,7 @@
 
         public void GetHit()
         {
-        Health--;
+            Health--;
             if (Health > 0)
             {
                 Helmet.SetActive(false);

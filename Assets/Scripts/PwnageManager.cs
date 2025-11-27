@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PwnageManager : Singleton
 {
-    public static float score;
+    public static float score = 0f;
 
     public static float hornyMeter;
     public static float rageMeter = 0f;

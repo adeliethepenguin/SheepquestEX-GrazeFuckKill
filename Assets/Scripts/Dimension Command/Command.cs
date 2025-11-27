@@ -12,6 +12,8 @@ public class Command : MonoBehaviour
     public Color[] floorcolors;
     public Color[] skycolors;
 
+    public GameObject[] setDressings;
+
 
     public Receiver receiver;
     public Camera cam;
@@ -23,11 +25,11 @@ public class Command : MonoBehaviour
         this.defaultSky = RenderSettings.skybox.GetColor("_SkyTint");
         
     }
-    public Command(int newDimension)
+    public Command(int newDim)
     {
-        this.defaultFloor = floorcolors[newDimension];
-        this.defaultSky = skycolors[newDimension];
-        events.SceneSwitched(newDimension);
+        this.defaultFloor = floorcolors[newDim];
+        this.defaultSky = skycolors[newDim];
+        events.SceneSwitched(newDim);
     }
 
     public void NewDimension(int newDim)
@@ -40,8 +42,32 @@ public class Command : MonoBehaviour
                 RenderSettings.skybox.SetColor("_SkyTint", skycolors[newDim]);
                 DynamicGI.UpdateEnvironment();
             }
+            /*
+            var spawners = FindObjectsOfType(typeof(EnemySpawner));
+            foreach(EnemySpawner spawner in spawners)
+            {
+                if (spawner.dimension != newDim)
+                {
+                    foreach (MonoBehaviour e in spawner.enemies)
+                    {
+
+                        e.gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    foreach (MonoBehaviour e in spawner.enemies)
+                    {
+
+                        e.gameObject.SetActive(true);
+                    }
+                }
+            }
+            */
             receiver.NewDim(newDim);
-        }
+            
+            }
+        
         events.SceneSwitched(newDim);
     }
 

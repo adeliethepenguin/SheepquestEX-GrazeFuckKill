@@ -14,11 +14,13 @@ public class Hacker : MonoBehaviour, IEnemy
 
     public float Range { get; set; }
 
+    public float Points {  get; set; }
     public Transform Trans { get; set; }
 
     public GameObject Player { get; set; }
 
     [SerializeField]
+    public float setScore = 1f;
     public float minHeight = 2f;
     public float setHealth;
     public float setSpeed;
@@ -37,7 +39,9 @@ public class Hacker : MonoBehaviour, IEnemy
         }
     }
     public void Initialize(RealEvent events, GameObject player)
-    {Health = setHealth;
+    {
+        Points = setScore;
+        Health = setHealth;
         Speed = setSpeed;
         Player = player;
         EventManager = events;

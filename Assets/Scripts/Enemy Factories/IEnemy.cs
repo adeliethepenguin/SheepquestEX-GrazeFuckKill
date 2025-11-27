@@ -10,6 +10,8 @@ public interface IEnemy
     public float Speed { get; set; }
 
     public float Range { get; set; }
+    
+    public float Points { get; set; }
 
     public string Name { get; set; }
 
