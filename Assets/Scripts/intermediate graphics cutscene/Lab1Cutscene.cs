@@ -10,9 +10,13 @@ public class Lab1Cutscene : CameraSwapperBase
     public float zoomLength = 5f;
     public float firstWalkLength = 5f;
     public float secondWalkLength = 5f;
+    public float dramaticRevealBun = 3f;
     public float insidePullOutLength = 0.5f;
-    
 
+
+    public GameObject creditSequence;
+
+    public AudioSource creditSong;
     
 
     private void Start()
@@ -22,9 +26,10 @@ public class Lab1Cutscene : CameraSwapperBase
     // Update is called once per frame
     void Update()
     {
-
+        timer += Time.deltaTime;
         //Debug.Log(timer);
-        CamUpdate();
+        //CamUpdate();
+        Debug.Log(shot);
 
         if (shot == 0)
         {
@@ -32,12 +37,17 @@ public class Lab1Cutscene : CameraSwapperBase
             {
                 if (timer > zoomLength / 60 * (120 - cams[0].Lens.FieldOfView + 1))
                 {
-                    cams[0].Lens.FieldOfView--;
+                    //cams[0].Lens.FieldOfView--;
                 }
             }
             else if (timer < zoomLength + firstWalkLength)
             {
-                oredBun.position += new Vector3(0, 0, -walkSpeed * Time.deltaTime);
+                //oredBun.position += new Vector3(0, 0, -walkSpeed * Time.deltaTime);
+            }
+            else
+            {
+                shot++;
+                timer = 0f;
             }
 
         }
@@ -45,21 +55,48 @@ public class Lab1Cutscene : CameraSwapperBase
         {
             if (timer < secondWalkLength)
             {
-                indooredBun.position += new Vector3(-walkSpeed * Time.deltaTime, 0, 0);
+                //indooredBun.position += new Vector3(-walkSpeed * Time.deltaTime, 0, 0);
+            }
+            else
+            {
+                shot++;
+                timer = 0f;
             }
 
         }
-        if (shot == 3)
+        else if (shot == 2)
+        {
+            if (timer < dramaticRevealBun)
+            {
+
+            }
+            else
+            {
+                shot++;
+                timer = 0f;
+            }
+        }
+        else if (shot == 3)
         {
             if (timer < insidePullOutLength)
             {
-                Debug.Log("penis");
+                
                 if (timer > insidePullOutLength / 40 * (cams[3].Lens.FieldOfView-50))
                 {
-                    Debug.Log("balls");
-                    cams[3].Lens.FieldOfView++;
+                    
+                    //cams[3].Lens.FieldOfView++;
                 }
             }
+            else
+            {
+                shot++;
+                timer = 0f;
+            }
+        }
+        else
+        {
+            //creditSequence.SetActive(true);
+            //creditSong.Play();
         }
     }
 }

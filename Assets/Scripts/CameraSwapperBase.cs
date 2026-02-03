@@ -5,10 +5,20 @@ public class CameraSwapperBase : MonoBehaviour
 {
     public int shot = 0;
 
-    public CinemachineCamera[] cams; 
+    public CinemachineCamera[] cams;
     public Animator[] animators;
 
-    public float timer =0f;
+    public float timer = 0f;
+
+    public void FalseUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            shot++;
+            timer = 0f;
+        }
+    }
+
     public void CamUpdate()
     {
         timer += Time.deltaTime;
